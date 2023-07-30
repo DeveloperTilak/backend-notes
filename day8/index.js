@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const app = express();
 
 app.use(express.json());
+// app.use(express.json());
 
 const authentication = (req, res, next) => {
   // const token = req.headers.authorization?.split(" ")[1]
