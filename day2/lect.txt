@@ -1,0 +1,47 @@
+Node's inbuilt module - HTTP 
+
+http - hyper text transfer protocol
+
+Protocol - agreed upon rules
+
+networking protocols - http, ws(web socket protocol)
+
+
+http network requests and also network responses
+
+3 way handshake
+1. Client expresses it's intent to connect to the server
+2. server acknowledges the client's intent
+3. Client says Okay - and whatever it's request is
+
+
+https
+
+nodemon - node monitor
+
+API endpoint/routes - /posts, /todos, /sugar, /lecture 
+
+
+HTTP verbs/methods
+GET
+POST
+PUT
+PATCH
+DELETE
+
+
+2GB movie  -> download -> 2GB movie in your computer instantly?
+
+Bandwidth - how much data can be transfered per second - more is good
+Latency - how much the delay - Less is good
+
+
+
+Benchmarking - how much it can handle/bear or measuring it's performance
+
+Benchmark our server - how many requests/sec it can handle?
+
+autocannon
+
+ npx autocannon http://localhost:8012/abc   
+ npx autocannon apiendpoint

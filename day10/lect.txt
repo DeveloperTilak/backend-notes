@@ -1,0 +1,15 @@
+Oauth - 
+PPT Link - https://docs.google.com/presentation/d/1Yu1SMn10D41zzBBZpDGDzZWSHNvB2F7xlB1aX9OmdQY/edit?usp=sharing
+
+Complexity and Oauth providers way of implementing oauth/giving access etc
+
+1. This will not be asked in the evaluation
+2. Even in placements
+    a) no company asks to implement Oauth in live coding
+    b) very less companies ask to implement Oauth but in a take way assignment - 24 hours or so
+
+
+implementation
+
+1. Oauth provider - Github(in today's class), Google(in recorded video)
+2. Register our application - 
