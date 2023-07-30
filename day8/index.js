@@ -1,63 +1,20 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-require('dotenv').config()
-
+require("dotenv").config();
 
 // console.log(process.env.SECRET_KEY)
 
 const { connection } = require("./db_server");
 const { SignupModel } = require("./models/SignUp.model");
+const { authentication } = require("./middleWares/authentication");
+const { authorisation } = require("./middleWares/authorisation");
 
 const app = express();
 
 app.use(express.json());
 
-//Authorisation
-const authorisation = async (req, res, next)=>{
-
-  const token = req.headers.authorization?.split(" ")[1]
-
-          let decoded = jwt.verify(token, process.env.SECRET_KEY);
-          console.log(decoded)
-
-          const user_id = decoded.user_id;
-          const user  = await SignupModel.findOne({_id: user_id})
-
-          const role = user.role;
-
-          if(role == "customer" && req.url ==="/contact" && req.method == "GET"){
-            next();
-          }
-          else if(role == "maintainer" && req.url ==="/details" && req.method == "GET"){
-            next();
-          }
-            else{
-              res.send({"message": "unAuthorized"})
-            }
-}
-
-
-//Authentication
-const authentication = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1]
-  // const { token } = req.query;
-
-  if (!token) {
-    res.send("please login first");
-  } else {
-    jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
-      if (err) {
-        res.send("please login");
-      } else {
-        // res.send("you logedin");
-        // console.log(decoded);
-        next();
-      }
-    });
-    // res.send("access the reports");
-  }
-};
+ 
 
 //home route
 app.get("/", (req, res) => {
@@ -66,7 +23,7 @@ app.get("/", (req, res) => {
 
 //signup Endpoint post Method
 app.post("/signup", async (req, res) => {
-  const { email, password, name, age,role } = req.body;
+  const { email, password, name, age, role } = req.body;
 
   bcrypt.hash(password, 5, async function (err, hash) {
     // Store hash in your password DB.
@@ -75,7 +32,7 @@ app.post("/signup", async (req, res) => {
       age,
       email,
       password: hash,
-      role
+      role,
     });
 
     await new_user.save();
@@ -84,8 +41,7 @@ app.post("/signup", async (req, res) => {
   });
 });
 
-
-//login endpoint post method 
+//login endpoint post method
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -100,7 +56,7 @@ app.post("/login", async (req, res) => {
     bcrypt.compare(password, hashed_pass, function (err, result) {
       // result == true
       if (result) {
-        var token = jwt.sign({user_id : user._id}, process.env.SECRET_KEY);
+        var token = jwt.sign({ user_id: user._id }, process.env.SECRET_KEY);
 
         return res.send({ message: "login successfully.", token: token });
       } else {
@@ -110,7 +66,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-
 //report endpoint get method
 app.get("/report", authentication, (req, res) => {
   // const { token } = req.query;
@@ -118,15 +73,15 @@ app.get("/report", authentication, (req, res) => {
   res.send("report accessed");
 });
 
-app.get("/contact", authentication, authorisation, async (req, res) => {
-  res.send("here are the contact info")  
-})
+app.get("/contact", authentication, authorisation(["customer"]), async (req, res) => {
+  res.send("here are the contact info");
+});
 
-app.get("/details", authentication,authorisation, (req, res) => {
-res.send("here are the details")  
-})
+app.get("/details", authentication, authorisation(["maintainer", "customer" ]), (req, res) => {
+  res.send("here are the details");
+});
 
-//server starts at 
+//server starts at
 app.listen(3000, async () => {
   try {
     await connection;
