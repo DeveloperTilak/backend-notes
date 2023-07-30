@@ -9,7 +9,8 @@ const signupSchema = mongoose.Schema(
         name: String,
         age: Number,
         email: String,
-        password: String
+        password: String,
+        role: {type: String, enum: ['maintainer', 'customer'], default:"customer"}
         
     }
 )

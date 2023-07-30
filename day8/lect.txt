@@ -74,6 +74,8 @@ plain text = nihal@123  -> Hashing algo, 2 rounds of salt -> hashed text = "x782
 
 
 
+
+
 Authorisation - determining/controlling what access does someone/user have 
 
 who should (based on their role) have access to which routes/endpoints
