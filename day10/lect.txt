@@ -1,4 +1,4 @@
-Oauth - 
+Oauth - (live class)
 PPT Link - https://docs.google.com/presentation/d/1Yu1SMn10D41zzBBZpDGDzZWSHNvB2F7xlB1aX9OmdQY/edit?usp=sharing
 
 Complexity and Oauth providers way of implementing oauth/giving access etc
