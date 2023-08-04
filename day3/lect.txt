@@ -1,4 +1,63 @@
+Express - E of the MERN stack
 
-#E- E of MERN stack
+Expres
 
-this is text from day3 lecture notes
+http module of node
+
+Express is also built on top of http module of node itself
+
+1. Helps us create the server and the API's in a much simpler and express way
+2. Middleware ecosystem
+
+Express
+Just remember - Method + routes
+
+
+
+Method/verb/http method/http verbs
+
+endpoint/route/api endpoint 
+
+we know how to create a server and API's using express
+
+1. Params vs query
+    query - api.weather.com?city=blr
+    query - lectures.masaischool.com?lecture_id=3
+    query - https://www.google.com/search?q=express
+            http://localhost:8000/welcome?name=xyz&city=pune&age=25
+    query - req.query 
+
+    params - lectures.masaischool.com/lecture/1
+    params - req.params
+    params - app.get("/lectures/:param_name")
+
+2. status codes
+    404 - NOT FOUND
+    500 - Internal server error
+    200 - everything is okay
+    https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+    res.status(200).send(data)
+
+3. headers
+   headers convey additional information
+   https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
+   res.setHeader("Server","local server") - to send from server in response
+
+   req.headers - to read the headers of the client
+
+4. CRUD 
+
+Reading part - we have to parse data, as we can't access the key directly in JSON (do try it out by making a simple json and accessing the key)
+Updating part - 
+                a) we need to get the entire existing JSON
+                b) parse the JSON and make it normal object
+                c) in the normal object, manipulate to add the new lecture
+                d) stringify the normal object to make it JSON
+                e) store the JSON - writeFile
+
+
+when to parse 
+    when we want to make any changes to JSON
+
+when to stringify
+   before storing in json file, make your object as JSON. how do you do it? - by JSON.stringify()

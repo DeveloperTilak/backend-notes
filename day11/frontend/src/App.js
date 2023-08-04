@@ -1,15 +1,13 @@
 // src/App.js
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-
-import BlogPosts from './components/BlogPosts';
-import SignUpPage from './Pages/SignUpPage';
-import LoginPage from './Pages/LoginPage';
+import Navbar from './Rotues/Navbar';
+import AllRoutes from './Rotues/AllRoutes';
 
 function App() {
   return (
      <div>
-      <SignUpPage />
+      <Navbar />
+      <AllRoutes />
      </div>
   );
 }

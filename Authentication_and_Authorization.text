@@ -1,0 +1,97 @@
+Authentication
+Authorisation
+Oauth
+Full stack application
+Deployment
+
+
+Authentication : 
+            Identifying who someone is or what their identity is.
+
+
+1. POST signup/register
+                     email, password, phone number, address
+                     1. store the email, (hashed)password in the DB in the users collection
+                     2. Res - signed up sucessfully
+
+2. POST login
+                    email, password
+                    1. check if this email, password exist in Database
+                    2. If exist ? "login successfull" + "1234" : "login failed"
+
+
+3. /reports  (Protected - user needs to be logged in to get reports)       
+                  a) email, password  - POST /reports
+                    1. check if this email, password exist in Database
+                    2. If exist ? "send reports" : "login first"
+
+                    why not?
+                    1. Very bad user experience
+                    2. It's expensive on the Backend side as well querying users collection again and again
+
+
+                 b) GET /reports 
+                    1. we'll check the headers if the request is having a token
+                    2. check if token is valid, give the access to this particular route  else, ask to login again
+
+
+
+
+Token 
+
+JWT - JSONWEBTOKEN
+
+JWT - 1. Algo - default
+      2. payload - {we can give whatever we want to, we can use this strategically}
+      3. secret key 
+
+jwt.io
+jsonwebtoken - https://www.npmjs.com/package/jsonwebtoken
+
+
+
+
+During singup, instead of storing password in plain text in the DB, we need to store it in unreadable format
+
+Encryption vs Hashing
+
+Encryption - 
+It's a reversible process -> you can encrypt/decrypt and vice versa
+
+plan text = "hi" -> Encryption algo -> encrypted text = "ij"
+Encryption key = char + 1
+encrypted text = "ij" -> Decryption algo -> plain text = "hi"
+
+
+Hashing 
+It's not a reversible process 
+
+plain text = "nihal@123" -> Hashing Algo(SHA1) -> hashed text = "x782345FG"
+
+Our DB has password as = "x782345FG"
+
+plain text = nihal@123  -> Hashing algo, 2 rounds of salt -> hashed text = "x782345FG23"
+
+
+
+Authorisation - determining/controlling what access does someone/user have 
+
+who should (based on their role) have access to which routes/endpoints
+
+RBAC (Role based access control)
+
+Amazon -> 
+
+"customer" -> can I edit the price - "No"
+"seller" -> can a seller edit the price of thier products - "Yes"
+"admin" -> can delete a product - "Yes"
+
+
+
+2 pending things 
+
+
+1. See how you can further optimise the authorisation middleware
+    think if we had 5 roles, 5 endpoints and each endpoint has 4 possible methods (GET, POST, PUT, DELETE)
+2. Think how the admin role will be given
+ 

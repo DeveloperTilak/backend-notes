@@ -1,0 +1,36 @@
+Express - it's middlewares
+
+Middleware
+
+It's a function which has access to the req object, the res object and has a next function
+
+app.use(middleware)
+
+Middleware works for *all* the routes/endpoints defined below it
+
+Custom middlewares : - we write our logic
+In the middleware function, we can write our own logic as per our need
+Ex : timer, logger, gatekeeper etc
+
+Express inbuilt middlewares : 
+Middlewares that exist within express
+Ex : express.json(), express.text()
+
+
+Community/external middleware : 
+Ex : cors(), multer
+
+CORS - cross origin resource sharing
+
+client's orgin - react app on codesandbox
+server's origin - localhost 8500
+
+
+
+LEAP
+
+LEarn
+Apply
+Present
+
+Hukumu interview

@@ -1,1 +1,42 @@
-this is text from day1 lecture notes
+Nodejs
+
+"N" of the MERN stack
+
+Javascript - was meant only to run in the browser
+
+v8 engine(chrome) in the browser helps Javascript to run
+spidermonkey(firefox)
+
+FE : HTML, CSS, JS
+BE : JAVA/PYTHON/PHP + springboot/django/laravel + DB
+BE : JS + express + DB
+
+Ryan dahl - run time environment(Nodejs) - help js run outside the browser 
+
+any other run time env for JS? - Deno, Bun.js
+
+
+Nodejs - v8 engine + other things (os, files, cpu)
+
+
+other things = inbuilt modules of node 
+
+
+Node REPL - read, eval, print, loop
+
+
+1. import/export - ESM - Ecmascript modules - ES6(2015)
+    import x from "y"
+    export default x
+
+    Node(2009)
+    CJS - common JS
+    var x = require("y")
+    module.exports = x
+
+a) custom modules - some code/logic that we wrote
+b) node inbuilt modules - os(for operation system details), fs (for reading files)
+c) third party modules - npm - 10 lakh packages
+
+
+LMS - https://youtu.be/XBu54nfzxAQ
