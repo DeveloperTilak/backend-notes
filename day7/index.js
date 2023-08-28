@@ -11,64 +11,67 @@ app.get("/", (req, res) => {
   res.send("response");
 });
 
-
 //1.get data
 
 app.get("/users", async (req, res) => {
-
   try {
-    const {city, minAge,maxAge} = req.query
+    const { city, minAge, maxAge } = req.query;
 
-    console.log(city, minAge)
+    console.log(city, minAge);
 
-    let  query ={} ;
-    if(city){
-
-      query.city  = city;
+    let query = {};
+    if (city) {
+      query.city = city;
     }
-    if(minAge){
-      query.age = {$gte: parseInt(minAge)}
+    if (minAge) {
+      query.age = { $gte: parseInt(minAge) };
     }
-    if(maxAge){
-      query.age = {...query.age, $lte: parseInt(maxAge)}
+    if (maxAge) {
+      query.age = { ...query.age, $lte: parseInt(maxAge) };
     }
 
-    const user = await UserModel.find(query)
+    const user = await UserModel.find(query);
     res.status(200).send(user);
   } catch (error) {
-    res.status(500).send("There is an error, While finding the data.")
+    res.status(500).send("There is an error, While finding the data.");
   }
- 
 });
-
 
 //2. Post data
 
 app.post("/users", async (req, res) => {
   //   const user = await UserModel.insertMany(req.body);
 
-  const new_user = new UserModel(req.body);
+  try {
+    const new_user = new UserModel(req.body);
 
-  await new_user.save();
+    await new_user.save();
 
-  console.log("post successfully.");
-  res.send(new_user);
+    console.log("post successfully.");
+    res.status(200).send(new_user);
+  } catch (error) {
+    console.log("Error, while saving the data", error);
+    res.status(500).send(error);
+  }
 });
-
-
 
 //3. Delete data
 
 app.delete("/users/:id", async (req, res) => {
-  const user = await UserModel.findByIdAndDelete(req.params.id);
+  try {
+    const user = await UserModel.findByIdAndDelete(req.params.id);
 
-  if (!user) {
-    return res.send("Product Not Found.");
+    if (!user) {
+      return res.status(404).send("User Not Found.");
+    }
+
+    res.status(200).send(user);
+    console.log("User deleted successfully.");
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).send("An error occurred while deleting the user.");
   }
-  res.send(user);
-  console.log("deleted successfully.");
 });
-
 
 //4. Update data
 app.put("/users/:id", async (req, res) => {
@@ -83,11 +86,11 @@ app.put("/users/:id", async (req, res) => {
   console.log("updated...", user);
 });
 
-
-
 //below app.use will handle random rotues.
-app.use((req, res ) => {
-  res.status(404).send("Sorry, the requested page or API endpoint was not found.");
+app.use((req, res) => {
+  res
+    .status(404)
+    .send("Sorry, the requested page or API endpoint was not found.");
 });
 
 app.listen(3000, async () => {
