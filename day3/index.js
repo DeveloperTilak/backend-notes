@@ -22,87 +22,99 @@ app.post("/lecture", (req, res) => {
 
 app.get("/posts", (req, res) => {
   fs.readFile("./posts.json", "utf-8", (err, data) => {
-    if (err) {
+     if (err) {
       res.send("There is an error.");
     }
     res.send(data);
   });
 });
-app.get("/todos", (req, res) => {
-  fs.readFile("./db.json", "utf-8", (err, data) => {
-    if (err) {
-      res.send("There is an error.");
+ 
+
+app.get("/todos", (req, res)=>{
+
+
+  fs.readFile("./db.json", "utf-8", (err, data)=>{
+
+    if(err){
+      return res.status(500).send("Error: occurrs while reading file.")
     }
 
-    const parse_data = JSON.parse(data);
+     const parsed_data= JSON.parse(data);
 
-    res.send(parse_data.todos);
-  });
-});
+     res.status(200).send(parsed_data)
 
-app.post("/todos", (req, res) => {
-  const new_todo = req.body;
-  // console.log(new_todo);
+  })
 
-  fs.readFile("./db.json", "utf-8", (err, data) => {
-    // console.log(data)
-    let parsed_data = JSON.parse(data);
-    let todo = parsed_data.todos;
-    // console.log(todo);
-
-    todo.push(new_todo);
-    // console.log(todo);
-
-    let new_data = JSON.stringify(parsed_data);
-
-    fs.writeFile("./db.json", new_data, "utf-8", (err) => {
-      if (err) {
-        return res.send("there is err");
-      }
-      res.send("data post successfully.");
-    });
-  });
-});
-
-app.delete("/todos/:id", (req, res)=>{
-
-     const {id} = req.params
-    // console.log(id)
-
-
-    fs.readFile("./db.json", "utf-8", (err, data)=>{
-
-
-      let whole_data = JSON.parse(data);
-      let todoData = whole_data.todos
-
-      
-      // console.log(todoData)
-
-
-      const index = todoData.findIndex((ele) => ele.id == parseInt(id));
-
-      console.log(index)
-      if(index === -1){
-        return res.send("Todo not found.")
-      }
-
-
-      todoData.splice(index, 1);
-
-      let new_data = JSON.stringify(whole_data)
-
-      fs.writeFile("./db.json", new_data, "utf-8", (err)=>{
-
-        if(err){
-          return res.send("there was some error.")
-        }
-        res.send("delete successfully.")
-      })
-
-    })
 })
 
+
+
+
+
+
+
+app.post("/todos", (req, res)=>{
+
+  const user_data = req.body;
+
+
+  fs.readFile("./db.json", "utf-8", (err, data)=>{
+
+    if(err){
+      return res.status(500).send("There is an error.")
+    }
+
+   const parsed_data= JSON.parse(data)
+
+     parsed_data.todos.push(user_data);
+
+
+    fs.writeFile("./db.json", JSON.stringify(parsed_data), "utf-8", (err)=>{
+
+      if(err){
+        return res.status(500).send("There is an error.")
+      }
+      res.status(200).send("Successfully post data.")
+    })
+  })
+})
+ 
+
+
+app.delete("/todo/:id", (req, res)=>{
+
+  const {id} = req.params
+
+  console.log(id)
+  fs.readFile("./db.json", "utf-8", (err, data)=>{
+
+
+
+    if(err){
+      return res.status(500).send("There is an error, while reading the data")
+    }
+   const parse_data= JSON.parse(data)
+   const todo  = parse_data.todos
+
+   const index = todo.findIndex((ele)=> ele.id === parseInt(id))
+
+   if(index===-1){
+      return res.status(404).send("not found data")
+   }
+   
+   todo.splice(index, 1);
+
+   fs.writeFile("./db.json", JSON.stringify(parse_data), "utf-8", (err)=>{
+
+
+    if(err){
+      return res.status(500).send("Error occurrs")
+    }
+
+    res.status(200).send("Successfully deleted data.")
+   })
+  })
+})
 app.get("/instructor", (req, res) => {
   fs.readFile("./db.json", "utf-8", (err, data) => {
     if (err) {
@@ -141,6 +153,10 @@ app.get("/welcome", (req, res) => {
   );
   // console.log(name, age);
 });
+
+app.use( "*", (req, res)=>{
+  res.status(404).send("not found this endpoint")
+})
 
 app.listen(3000, () => {
   console.log("listening to port 3000");

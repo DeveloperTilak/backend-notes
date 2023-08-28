@@ -1,1 +1,42 @@
-{"todos":[{"id":2,"todo":"Node","status":true},{"id":3,"todo":"MongoDB","status":false},{"id":4,"todo":"MongoDB","status":false},{"id":1,"todo":"MongoDB","status":false},{"id":6,"todo":"DEVELOPER","status":false}],"instructor":[{"id":1,"todo":"Nihal","status":true},{"id":2,"todo":"Ankit","status":true}]}
+{
+    "todos": [
+        {
+            "id": 2,
+            "todo": "Node",
+            "status": true
+        },
+        {
+            "id": 3,
+            "todo": "MongoDB",
+            "status": false
+        },
+        {
+            "id": 4,
+            "todo": "MongoDB",
+            "status": false
+        },
+        {
+            "id": 1,
+            "todo": "MongoDB",
+            "status": false
+        },
+        {
+            "id": 6,
+            "todo": "DEVELOPER",
+            "status": false
+        } 
+         
+    ],
+    "instructor": [
+        {
+            "id": 1,
+            "todo": "Nihal",
+            "status": true
+        },
+        {
+            "id": 2,
+            "todo": "Ankit",
+            "status": true
+        }
+    ]
+}
