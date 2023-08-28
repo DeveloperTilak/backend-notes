@@ -15,9 +15,30 @@ app.get("/", (req, res) => {
 //1.get data
 
 app.get("/users", async (req, res) => {
-  const user = await UserModel.find();
 
-  res.send(user);
+  try {
+    const {city, minAge,maxAge} = req.query
+
+    console.log(city, minAge)
+
+    let  query ={} ;
+    if(city){
+
+      query.city  = city;
+    }
+    if(minAge){
+      query.age = {$gte: parseInt(minAge)}
+    }
+    if(maxAge){
+      query.age = {...query.age, $lte: parseInt(maxAge)}
+    }
+
+    const user = await UserModel.find(query)
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(500).send("There is an error, While finding the data.")
+  }
+ 
 });
 
 
@@ -62,10 +83,10 @@ app.put("/users/:id", async (req, res) => {
   console.log("updated...", user);
 });
 
+
+
 //below app.use will handle random rotues.
-
-
-app.use((req, res, next) => {
+app.use((req, res ) => {
   res.status(404).send("Sorry, the requested page or API endpoint was not found.");
 });
 
